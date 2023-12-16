@@ -1,3 +1,7 @@
 header {
     padding-bottom: 2%;
 }
+
+.pokemon {
+    cursor: pointer;
+}

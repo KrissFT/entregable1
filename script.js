@@ -1,6 +1,17 @@
+function descripcionForEach (data){
+    let desc
+    data.flavor_text_entries.forEach(entry => {
+        if (entry.language.name == "es") {
+            desc = entry.flavor_text
+        }        
+    });
+    return desc
+}
 
 window.addEventListener("load", async function(){
-    let resultado = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    let cantidad = 251
+
+    let resultado = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${cantidad}`);
     let pokedata = await resultado.json();
     let pokedex = pokedata.results
 
@@ -11,7 +22,7 @@ window.addEventListener("load", async function(){
     let id = 0 
     pokedex.forEach(pokemon => {
         id ++
-        lista.innerHTML += `<li class="pokemon list-group-item">${id} - ${pokemon.name}</li>`
+        lista.innerHTML += `<li class="list-group-item"><span class="pokemon">${id} - ${pokemon.name}</span></li>`
     });
 
     
@@ -26,7 +37,7 @@ window.addEventListener("load", async function(){
             
             console.log(data_ind)
             console.log(data_esp)
-
+            
             if (data_ind.types.length == 1) {
                 lista.innerHTML = `
                 <div class="card mb-3" style="max-width: 540px;">
@@ -38,7 +49,7 @@ window.addEventListener("load", async function(){
                             <div class="card-body">
                                 <h5 class="card-title">${data_ind.name}</h5>
                                 <p class="card-text">Tipo: ${data_ind.types[0].type.name}</p>
-                                <p class="card-text">${data_esp.flavor_text_entries[42].flavor_text}</p>
+                                <p class="card-text">${descripcionForEach(data_esp)}</p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +66,7 @@ window.addEventListener("load", async function(){
                             <div class="card-body">
                                 <h5 class="card-title">${data_ind.name}</h5>
                                 <p class="card-text">Tipo: ${data_ind.types[0].type.name}-${data_ind.types[1].type.name}</p>
-                                <p class="card-text">${data_esp.flavor_text_entries[42].flavor_text}</p>
+                                <p class="card-text">${descripcionForEach(data_esp)}</p>
                             </div>
                         </div>
                     </div>
